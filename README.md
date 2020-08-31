@@ -28,3 +28,15 @@ Make sure to source the provided "setupvars.sh".
 For more information see section "Build the Demo Applications" here:
 
 https://docs.openvinotoolkit.org/latest/omz_demos_README.html
+
+
+More Information
+----------------
+The code is based on the OpenVino model zoo. More information can be found here:
+
+https://github.com/openvinotoolkit/open_model_zoo/tree/master/demos/human_pose_estimation_demo
+
+
+More information about the model can be found here:
+
+https://docs.openvinotoolkit.org/latest/omz_models_intel_human_pose_estimation_0001_description_human_pose_estimation_0001.html

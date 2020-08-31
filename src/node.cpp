@@ -25,9 +25,9 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
   image_transport::Publisher debug_image_pub = it.advertise("/human_pose_debug", 1);
 
   bool publish_debug_image;
-  nh.param<bool>("publish_debug_image", publish_debug_image, true);
+  nh.param<bool>("/publish_debug_image", publish_debug_image, true);
   float score_threshold;
-  nh.param<float>("score_threshold", score_threshold, 150);
+  nh.param<float>("/score_threshold", score_threshold, 150);
 
   std::vector<HumanPose> poses;
   human_pose_estimation_openvino::HumanPoseArray pose_msg;
@@ -48,7 +48,6 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
         sleep(0.1);
       }
       poses = estimator.postprocessCurr();
-      ROS_WARN_STREAM(poses.size());
       std::vector<human_pose_estimation_openvino::HumanPoseEstimation>
           estimation_msgs = std::vector<human_pose_estimation_openvino::HumanPoseEstimation>();
       // convert to ROS message and publish
