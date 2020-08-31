@@ -1,3 +1,3 @@
 std_msgs/Header header
 
-bitbots_gestures/HumanPoseEstimation[] poses
+human_pose_estimation_openvino/HumanPoseEstimation[] poses

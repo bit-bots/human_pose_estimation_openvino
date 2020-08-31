@@ -8,7 +8,7 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
   ros::NodeHandle nh;
   image_transport::ImageTransport it = image_transport::ImageTransport(nh);
 
-  std::string package_path = ros::package::getPath("bitbots_gestures");
+  std::string package_path = ros::package::getPath("human_pose_estimation_openvino");
   HumanPoseEstimator
       estimator(package_path + "/models/human-pose-estimation-0001.xml", "MYRIAD", false);
 
@@ -21,7 +21,7 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
   new_image = false;
 
   image_transport::Subscriber image_sub = it.subscribe("/image_raw", 1, &HumanPoseEstimatorNode::imageCb, this);
-  ros::Publisher pose_pub = nh.advertise<bitbots_gestures::HumanPoseArray>("/human_poses", 1);
+  ros::Publisher pose_pub = nh.advertise<human_pose_estimation_openvino::HumanPoseArray>("/human_poses", 1);
   image_transport::Publisher debug_image_pub = it.advertise("/human_pose_debug", 1);
 
   bool publish_debug_image;
@@ -30,7 +30,7 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
   nh.param<float>("score_threshold", score_threshold, 150);
 
   std::vector<HumanPose> poses;
-  bitbots_gestures::HumanPoseArray pose_msg;
+  human_pose_estimation_openvino::HumanPoseArray pose_msg;
   pose_msg.header.frame_id = "camera_optical_frame";
   while (ros::ok()) {
     if (new_image) {
@@ -49,12 +49,12 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
       }
       poses = estimator.postprocessCurr();
       ROS_WARN_STREAM(poses.size());
-      std::vector<bitbots_gestures::HumanPoseEstimation>
-          estimation_msgs = std::vector<bitbots_gestures::HumanPoseEstimation>();
+      std::vector<human_pose_estimation_openvino::HumanPoseEstimation>
+          estimation_msgs = std::vector<human_pose_estimation_openvino::HumanPoseEstimation>();
       // convert to ROS message and publish
       for (unsigned int i = 0; i < poses.size(); i++) {
         if (poses[i].score > score_threshold) {
-          bitbots_gestures::HumanPoseEstimation estimation_msg;
+          human_pose_estimation_openvino::HumanPoseEstimation estimation_msg;
           std::vector<geometry_msgs::Point32> points = std::vector<geometry_msgs::Point32>();
           // iterate through all keypoints
           for (unsigned int j = 0; j < poses[i].keypoints.size(); j++) {

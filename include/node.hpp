@@ -16,8 +16,8 @@
 #include <sensor_msgs/Image.h>
 
 #include <opencv2/core/core.hpp>
-#include "bitbots_gestures/HumanPoseEstimation.h"
-#include "bitbots_gestures/HumanPoseArray.h"
+#include "human_pose_estimation_openvino/HumanPoseEstimation.h"
+#include "human_pose_estimation_openvino/HumanPoseArray.h"
 #include <ros/package.h>
 
 namespace human_pose_estimation {

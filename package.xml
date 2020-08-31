@@ -1,5 +1,5 @@
 <package format="2">
-  <name>human_pose_estimation_NCS2</name>
+  <name>human_pose_estimation_openvino</name>
   <description>
     Package to detect human poses using the intel neural compute stick 2.
   </description>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(bitbots_gestures)
+project(human_pose_estimation_openvino)
 
 find_package(catkin REQUIRED COMPONENTS
         image_transport
