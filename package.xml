@@ -4,7 +4,7 @@
     Package to detect human poses using the intel neural compute stick 2.
   </description>
 
-  <version>0.0.1</version>
+  <version>0.1.1</version>
 
   <maintainer email="bestmann@informatik.uni-hamburg.de">Marc Bestmann</maintainer>
   <maintainer email="info@bit-bots.de">Hamburg Bit-Bots</maintainer>
