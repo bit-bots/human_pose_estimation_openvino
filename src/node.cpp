@@ -20,7 +20,7 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
   bool first_image = true;
   new_image = false;
 
-  image_transport::Subscriber image_sub = it.subscribe("/image_raw", 1, &HumanPoseEstimatorNode::imageCb, this);
+  image_transport::Subscriber image_sub = it.subscribe("/camera/image_proc", 1, &HumanPoseEstimatorNode::imageCb, this);
   ros::Publisher pose_pub = nh.advertise<human_pose_estimation_openvino::HumanPoseArray>("/human_poses", 1);
   image_transport::Publisher debug_image_pub = it.advertise("/human_pose_debug", 1);
 

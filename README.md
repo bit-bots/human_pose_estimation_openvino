@@ -6,7 +6,7 @@ human poses. These are published and a debug image is provided.
 
 Topics:
 -------
-Expects Image message on "/image_raw"
+Expects Image message on "/camera/image_proc"
 
 Publishes self definded "HumanPoseEstimation" message on "/poses"
 
