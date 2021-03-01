@@ -1,0 +1,2 @@
+publish_debug_image: True
+score_threshold: 150

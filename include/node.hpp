@@ -14,6 +14,7 @@
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <sensor_msgs/Image.h>
+#include <std_msgs/Header.h>
 
 #include <opencv2/core/core.hpp>
 #include "human_pose_estimation_openvino/HumanPoseEstimation.h"
@@ -29,6 +30,7 @@ class HumanPoseEstimatorNode {
   void imageCb(const sensor_msgs::ImageConstPtr& msg);
 
   cv_bridge::CvImagePtr cv_ptr_;
+  std_msgs::Header img_header_;
   bool new_image;
 };
 }  // namespace human_pose_estimation

@@ -6,6 +6,7 @@ using namespace human_pose_estimation;
 HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
 
   ros::NodeHandle nh;
+  ros::NodeHandle pnh;
   image_transport::ImageTransport it = image_transport::ImageTransport(nh);
 
   std::string package_path = ros::package::getPath("human_pose_estimation_openvino");
@@ -20,18 +21,17 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
   bool first_image = true;
   new_image = false;
 
-  image_transport::Subscriber image_sub = it.subscribe("/camera/image_proc", 1, &HumanPoseEstimatorNode::imageCb, this);
-  ros::Publisher pose_pub = nh.advertise<human_pose_estimation_openvino::HumanPoseArray>("/human_poses", 1);
-  image_transport::Publisher debug_image_pub = it.advertise("/human_pose_debug", 1);
+  image_transport::Subscriber image_sub = it.subscribe("camera/image_proc", 1, &HumanPoseEstimatorNode::imageCb, this);
+  ros::Publisher pose_pub = nh.advertise<human_pose_estimation_openvino::HumanPoseArray>("human_poses", 1);
+  image_transport::Publisher debug_image_pub = it.advertise("human_pose_debug", 1);
 
   bool publish_debug_image;
-  nh.param<bool>("/publish_debug_image", publish_debug_image, true);
+  pnh.param<bool>("publish_debug_image", publish_debug_image, true);
   float score_threshold;
-  nh.param<float>("/score_threshold", score_threshold, 150);
+  pnh.param<float>("score_threshold", score_threshold, 150);
 
   std::vector<HumanPose> poses;
   human_pose_estimation_openvino::HumanPoseArray pose_msg;
-  pose_msg.header.frame_id = "camera_optical_frame";
   while (ros::ok()) {
     if (new_image) {
       // reshape once with data from first image. we assume that image size will not change later
@@ -68,7 +68,7 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
         }
       }
       pose_msg.poses = estimation_msgs;
-      pose_msg.header.stamp = ros::Time::now();
+      pose_msg.header = img_header_;
       pose_pub.publish(pose_msg);
       if (publish_debug_image) {
         // draw detected poses
@@ -115,6 +115,7 @@ HumanPoseEstimatorNode::HumanPoseEstimatorNode() {
 
 void HumanPoseEstimatorNode::imageCb(const sensor_msgs::ImageConstPtr &msg) {
   cv_ptr_ = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+  img_header_ = msg.header;
   new_image = true;
 }
 

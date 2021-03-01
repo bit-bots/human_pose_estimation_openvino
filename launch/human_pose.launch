@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="tf_prefix" value="$(eval optenv('ROS_NAMESPACE') + '/' if optenv('ROS_NAMESPACE') !=  '' else '')"/>
+
+  <node name="human_pose_estimator" pkg="human_pose_estimation_openvino" type="node" output="screen">
+    <rosparam command="load" file="$(find human_pose_estimation_openvino/config/config.yaml)" />
+  </node>
+</launch>
